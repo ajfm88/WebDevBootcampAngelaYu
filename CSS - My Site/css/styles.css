@@ -5,18 +5,27 @@ body {
 }
 
 h1 {
+  color: #66BFBF;
   font-size: 5.625rem;
+  line-height: 2;
   margin: 50px auto 0 auto;
   font-family: 'Sacramento', cursive;
 }
 
 h2 {
+  color: #66BFBF;
   font-family: 'Montserrat', sans-serif;
   font-size: 2.5rem;
+  font-weight: normal;
 }
 
 h3 {
+  color: #11999E;
   font-family: 'Montserrat', sans-serif;
+}
+
+a {
+  color: #11999E;
 }
 
 div {
@@ -36,6 +45,13 @@ div {
 .bottom-container {
 }
 
+.skill-row {
+  width: 50%;
+  margin: 100px auto 100px auto;
+  text-align: left;
+  line-height: 2;
+}
+
 .pro {
   text-decoration: underline;
 }
@@ -50,4 +66,20 @@ div {
   position: absolute;
   left: 300px;
   bottom: 300px;
+}
+
+.code-img {
+  width: 25%;
+  float: left;
+  margin-right: 30px;
+}
+
+.chili-img {
+  width: 25%;
+  float: right;
+  margin-left: 30px;
+}
+
+.programmer {
+  font-weight: normal;
 }

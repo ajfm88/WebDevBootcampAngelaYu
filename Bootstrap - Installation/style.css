@@ -1,3 +1,30 @@
 .carousel-item {
     height: 500px;
 }
+
+div {
+    height: 100px;
+    width: 100px;
+    border: 1px solid;
+}
+
+.red {
+    background-color: red;
+    z-index: 1;
+    position: absolute;
+}
+
+.yellow {
+    background-color: rgb(241, 241, 31);
+    left: 20px;
+    top: 20px;
+    z-index: 10;
+    position: static;
+}
+
+.blue {
+    background-color: rgb(43, 61, 226);
+    left: 40px;
+    top: 40px;
+    color: whitesmoke;
+}

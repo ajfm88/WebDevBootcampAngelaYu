@@ -17,6 +17,7 @@
 
 // 1 Create a var that stores the name that the user enters via input.
 var name = prompt("What is your name?");
+name = name.toLowerCase();
 // 2 Capitalise the first letter of their name.
 //a Isolate the first character
 firstChar = name.slice(0,1);

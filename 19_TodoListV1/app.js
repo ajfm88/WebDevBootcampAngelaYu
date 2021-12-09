@@ -4,6 +4,7 @@ const app = express();
 var items = ["Buy Food", "Cook Food", "Eat Food"];
 
 app.use(express.urlencoded({ extended : true}));
+app.use(express.static('public'));
 app.use(express.json());
 
 app.set('view engine', 'ejs');

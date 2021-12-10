@@ -17,8 +17,10 @@ app.use(express.urlencoded({ extended : true})); //Parse URL-encoded bodies
 let posts = [];
 
 app.get("/", function(req, res){
-  res.render("home", {startingContent: homeStartingContent});
-  console.log(posts);
+  res.render("home", {
+    startingContent: homeStartingContent, 
+    posts: posts,
+  });
 });
 
 app.get("/about", function(req, res){

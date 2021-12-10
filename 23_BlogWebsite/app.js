@@ -14,8 +14,11 @@ app.set('view engine', 'ejs');
 app.use(express.json()); //Used to parse JSON bodies
 app.use(express.urlencoded({ extended : true})); //Parse URL-encoded bodies
 
+let posts = [];
+
 app.get("/", function(req, res){
   res.render("home", {startingContent: homeStartingContent});
+  console.log(posts);
 });
 
 app.get("/about", function(req, res){
@@ -28,6 +31,18 @@ app.get("/contact", function(req, res){
 
 app.get("/compose", function(req, res){
   res.render("compose");
+});
+
+app.post("/compose", function(req, res){
+  const post = {
+    title: req.body.postTitle,
+    content: req.body.postBody
+  };
+
+  posts.push(post);
+
+  res.redirect("/");
+
 });
 
 app.listen(3000, function() {

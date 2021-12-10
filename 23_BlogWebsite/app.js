@@ -15,7 +15,7 @@ app.use(express.json()); //Used to parse JSON bodies
 app.use(express.urlencoded({ extended : true})); //Parse URL-encoded bodies
 
 app.get("/", function(req, res){
-  res.render("home.ejs");
+  res.render("home", {startingContent: homeStartingContent});
 });
 
 app.listen(3000, function() {

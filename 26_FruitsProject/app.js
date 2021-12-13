@@ -1,64 +1,101 @@
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
+//require the Mongoose package (after running >npm i mongoose in Hyper to install it)
+const mongoose = require('mongoose');
+ 
+//connect to MongoDB by specifying port to access MongoDB server
+main().catch(err => console.log(err));
+ 
+async function main() {
+  await mongoose.connect('mongodb://localhost:27017/FruitsDB');
+  }
+ 
+//create a SCHEMA that sets out the fields each document will have and their datatypes
+const fruitSchema = new mongoose.Schema ({
+	name: {
+    type: String,
+    required: [true, "Please check your data entry, no name specified"]
+  },
+	rating: {
+    type: Number,
+    min: 1,
+    max: 10
+  },
+	review: String
+})
+ 
+//create a MODEL
+const Fruit = new mongoose.model ("Fruit", fruitSchema)
+ 
+//create a DOCUMENT
+const fruit = new Fruit ({
+	rating: 10,
+	review: "Peaches are so yummy!"
+})
+ 
+//save the document
+// fruit.save()
+ 
+//**CHALLENGE: Set up a people database with one document and two fields**//
+//create a SCHEMA
+const personSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+});
+ 
+//create a MODEL
+const Person = mongoose.model('Person', personSchema);
+ 
+//create a DOCUMENT
+const person = new Person({
+  name: "John",
+  age: 37
+});
+ 
+//Save it
+// person.save();
 
-// Connection URL
-const url = 'mongodb://localhost:27017';
+// const kiwi = new Fruit({
+//   name: "Kiwi",
+//   score: 10,
+//   review: "The best fruit!"
+// })
 
-// Database Name
-const dbName = 'fruitsDB';
+// const orange = new Fruit({
+//   name: "Orange",
+//   score: 4,
+//   review: "Too sour for me"
+// })
 
-// Create a new MongoClient
-const client = new MongoClient(url, { useNewUrlParser: true});
+// const banana = new Fruit({
+//   name: "Banana",
+//   score: 3,
+//   review: "Weird texture"
+// })
 
-// Use connect method to connect to the Server
-client.connect(function(err) {
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
+// Fruit.insertMany([kiwi, orange, banana], function(err){
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log("Successfully saved all the fruits to fruitsDB");
+//   }
+// });
 
-  const db = client.db(dbName);
+Fruit.find(function(err, fruits){
+  if (err) {
+    console.log(err);
+  } else {
 
-  findDocuments(db, function() {
-    client.close();
-  });
+    mongoose.connection.close();
+
+    fruits.forEach(function(fruit){
+      console.log(fruit.name);
+    });
+  }
 });
 
-const insertDocuments = function(db, callback) {
-    // Get the documents collection
-    const collection = db.collection('fruits');
-    // Insert some documents
-    collection.insertMany([
-        {
-            name : "Apple",
-            score: 8,
-            reivew: "Great fruit"
-        },
-        {
-            name : "Orange",
-            score: 6,
-            reivew: "Kinda sour"
-        },
-        {
-            name: "Banana",
-            score: 9,
-            reivew: "Great stuff!"
-        }
-    ], function(err, result) {
-      assert.equal(err, null);
-      assert.equal(3, result.result.n);
-      assert.equal(3, result.ops.length);
-      console.log("Inserted 3 documents into the collection");
-      callback(result);
-    });
+Fruit.deleteOne({name: "Peach"}, function(err){
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("Successfully deleted the document");
   }
-
-  const findDocuments = function(db, callback) {
-    // Get the documents collection
-    const collection = db.collection('fruits');
-    // Find some documents
-    collection.find({}).toArray(function(err, fruits) {
-      assert.equal(err, null);
-      console.log("Found the following records");
-      console.log(fruits)
-      callback(fruits);
-    });
-  }
+})

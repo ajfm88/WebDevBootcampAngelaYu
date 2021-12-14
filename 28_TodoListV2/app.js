@@ -22,11 +22,11 @@ const Item = mongoose.model("Item", itemsSchema);
 
 
 const item1 = new Item({
-  name: "Welcome to your todo list!"
+  name: "Welcome to your todolist!"
 });
 
 const item2 = new Item({
-  name: "Hit the + button to add a new item"
+  name: "Hit the + button to add a new item."
 });
 
 const item3 = new Item({
@@ -35,12 +35,12 @@ const item3 = new Item({
 
 const defaultItems = [item1, item2, item3];
 
-const ListSchema = {
+const listSchema = {
   name: String,
   items: [itemsSchema]
 };
 
-const List = mongoose.model("List", ListSchema)
+const List = mongoose.model("List", listSchema);
 
 
 app.get("/", function(req, res) {
@@ -52,9 +52,9 @@ app.get("/", function(req, res) {
         if (err) {
           console.log(err);
         } else {
-          console.log("Successfully saved default items to DB.");
+          console.log("Successfully savevd default items to DB.");
         }
-      });      
+      });
       res.redirect("/");
     } else {
       res.render("list", {listTitle: "Today", newListItems: foundItems});
@@ -75,7 +75,7 @@ app.get("/:customListName", function(req, res){
           items: defaultItems
         });
         list.save();
-        res.redirect("/" + customListName)
+        res.redirect("/" + customListName);
       } else {
         //Show an existing list
 
@@ -83,6 +83,7 @@ app.get("/:customListName", function(req, res){
       }
     }
   });
+
 
 
 });
@@ -100,7 +101,7 @@ app.post("/", function(req, res){
     item.save();
     res.redirect("/");
   } else {
-    List.findOne({name: listName}, function name(err, foundList){
+    List.findOne({name: listName}, function(err, foundList){
       foundList.items.push(item);
       foundList.save();
       res.redirect("/" + listName);
@@ -117,20 +118,17 @@ app.post("/delete", function(req, res){
       if (!err) {
         console.log("Successfully deleted checked item.");
         res.redirect("/");
-      };
+      }
     });
   } else {
-    List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkedItemId}}}, function(err, foundList) {
-      if(!err){
+    List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkedItemId}}}, function(err, foundList){
+      if (!err){
         res.redirect("/" + listName);
       }
     });
   }
 
-});
 
-app.get("/work", function(req,res){
-  res.render("list", {listTitle: "Work List", newListItems: workItems});
 });
 
 app.get("/about", function(req, res){
